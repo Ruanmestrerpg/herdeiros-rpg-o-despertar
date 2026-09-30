@@ -10,33 +10,97 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedJogadorRouteImport } from './routes/_authenticated/jogador'
+import { Route as AuthenticatedMestreIndexRouteImport } from './routes/_authenticated/mestre.index'
+import { Route as AuthenticatedMestreIdRouteImport } from './routes/_authenticated/mestre.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedJogadorRoute = AuthenticatedJogadorRouteImport.update({
+  id: '/jogador',
+  path: '/jogador',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMestreIndexRoute =
+  AuthenticatedMestreIndexRouteImport.update({
+    id: '/mestre/',
+    path: '/mestre/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMestreIdRoute = AuthenticatedMestreIdRouteImport.update({
+  id: '/mestre/$id',
+  path: '/mestre/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/jogador': typeof AuthenticatedJogadorRoute
+  '/mestre/$id': typeof AuthenticatedMestreIdRoute
+  '/mestre/': typeof AuthenticatedMestreIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/jogador': typeof AuthenticatedJogadorRoute
+  '/mestre/$id': typeof AuthenticatedMestreIdRoute
+  '/mestre': typeof AuthenticatedMestreIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/_authenticated/jogador': typeof AuthenticatedJogadorRoute
+  '/_authenticated/mestre/$id': typeof AuthenticatedMestreIdRoute
+  '/_authenticated/mestre/': typeof AuthenticatedMestreIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/cadastro' | '/login' | '/jogador' | '/mestre/$id' | '/mestre/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/cadastro' | '/login' | '/jogador' | '/mestre/$id' | '/mestre'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/cadastro'
+    | '/login'
+    | '/_authenticated/jogador'
+    | '/_authenticated/mestre/$id'
+    | '/_authenticated/mestre/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  CadastroRoute: typeof CadastroRoute
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +112,71 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/jogador': {
+      id: '/_authenticated/jogador'
+      path: '/jogador'
+      fullPath: '/jogador'
+      preLoaderRoute: typeof AuthenticatedJogadorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mestre/': {
+      id: '/_authenticated/mestre/'
+      path: '/mestre'
+      fullPath: '/mestre/'
+      preLoaderRoute: typeof AuthenticatedMestreIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mestre/$id': {
+      id: '/_authenticated/mestre/$id'
+      path: '/mestre/$id'
+      fullPath: '/mestre/$id'
+      preLoaderRoute: typeof AuthenticatedMestreIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedJogadorRoute: typeof AuthenticatedJogadorRoute
+  AuthenticatedMestreIdRoute: typeof AuthenticatedMestreIdRoute
+  AuthenticatedMestreIndexRoute: typeof AuthenticatedMestreIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedJogadorRoute: AuthenticatedJogadorRoute,
+  AuthenticatedMestreIdRoute: AuthenticatedMestreIdRoute,
+  AuthenticatedMestreIndexRoute: AuthenticatedMestreIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  CadastroRoute: CadastroRoute,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
