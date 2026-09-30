@@ -10,33 +10,181 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as RegrasRouteImport } from './routes/regras'
+import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/conta'
+import { Route as AuthenticatedEntrarRouteImport } from './routes/_authenticated/entrar'
+import { Route as AuthenticatedJogadorRouteImport } from './routes/_authenticated/jogador'
+import { Route as AuthenticatedRoladorRouteImport } from './routes/_authenticated/rolador'
+import { Route as AuthenticatedMesaIndexRouteImport } from './routes/_authenticated/mesa.index'
+import { Route as AuthenticatedMesaIdRouteImport } from './routes/_authenticated/mesa.$id'
+import { Route as AuthenticatedMestreIndexRouteImport } from './routes/_authenticated/mestre.index'
+import { Route as AuthenticatedMestreIdRouteImport } from './routes/_authenticated/mestre.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegrasRoute = RegrasRouteImport.update({
+  id: '/regras',
+  path: '/regras',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedContaRoute = AuthenticatedContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedEntrarRoute = AuthenticatedEntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedJogadorRoute = AuthenticatedJogadorRouteImport.update({
+  id: '/jogador',
+  path: '/jogador',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRoladorRoute = AuthenticatedRoladorRouteImport.update({
+  id: '/rolador',
+  path: '/rolador',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMesaIndexRoute = AuthenticatedMesaIndexRouteImport.update({
+  id: '/mesa/',
+  path: '/mesa/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMesaIdRoute = AuthenticatedMesaIdRouteImport.update({
+  id: '/mesa/$id',
+  path: '/mesa/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMestreIndexRoute =
+  AuthenticatedMestreIndexRouteImport.update({
+    id: '/mestre/',
+    path: '/mestre/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMestreIdRoute = AuthenticatedMestreIdRouteImport.update({
+  id: '/mestre/$id',
+  path: '/mestre/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/regras': typeof RegrasRoute
+  '/conta': typeof AuthenticatedContaRoute
+  '/entrar': typeof AuthenticatedEntrarRoute
+  '/jogador': typeof AuthenticatedJogadorRoute
+  '/rolador': typeof AuthenticatedRoladorRoute
+  '/mesa/$id': typeof AuthenticatedMesaIdRoute
+  '/mestre/$id': typeof AuthenticatedMestreIdRoute
+  '/mesa/': typeof AuthenticatedMesaIndexRoute
+  '/mestre/': typeof AuthenticatedMestreIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/regras': typeof RegrasRoute
+  '/conta': typeof AuthenticatedContaRoute
+  '/entrar': typeof AuthenticatedEntrarRoute
+  '/jogador': typeof AuthenticatedJogadorRoute
+  '/rolador': typeof AuthenticatedRoladorRoute
+  '/mesa/$id': typeof AuthenticatedMesaIdRoute
+  '/mestre/$id': typeof AuthenticatedMestreIdRoute
+  '/mesa': typeof AuthenticatedMesaIndexRoute
+  '/mestre': typeof AuthenticatedMestreIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/regras': typeof RegrasRoute
+  '/_authenticated/conta': typeof AuthenticatedContaRoute
+  '/_authenticated/entrar': typeof AuthenticatedEntrarRoute
+  '/_authenticated/jogador': typeof AuthenticatedJogadorRoute
+  '/_authenticated/rolador': typeof AuthenticatedRoladorRoute
+  '/_authenticated/mesa/$id': typeof AuthenticatedMesaIdRoute
+  '/_authenticated/mestre/$id': typeof AuthenticatedMestreIdRoute
+  '/_authenticated/mesa/': typeof AuthenticatedMesaIndexRoute
+  '/_authenticated/mestre/': typeof AuthenticatedMestreIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/cadastro'
+    | '/login'
+    | '/regras'
+    | '/conta'
+    | '/entrar'
+    | '/jogador'
+    | '/rolador'
+    | '/mesa/$id'
+    | '/mestre/$id'
+    | '/mesa/'
+    | '/mestre/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/cadastro'
+    | '/login'
+    | '/regras'
+    | '/conta'
+    | '/entrar'
+    | '/jogador'
+    | '/rolador'
+    | '/mesa/$id'
+    | '/mestre/$id'
+    | '/mesa'
+    | '/mestre'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/cadastro'
+    | '/login'
+    | '/regras'
+    | '/_authenticated/conta'
+    | '/_authenticated/entrar'
+    | '/_authenticated/jogador'
+    | '/_authenticated/rolador'
+    | '/_authenticated/mesa/$id'
+    | '/_authenticated/mestre/$id'
+    | '/_authenticated/mesa/'
+    | '/_authenticated/mestre/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  CadastroRoute: typeof CadastroRoute
+  LoginRoute: typeof LoginRoute
+  RegrasRoute: typeof RegrasRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +196,124 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/regras': {
+      id: '/regras'
+      path: '/regras'
+      fullPath: '/regras'
+      preLoaderRoute: typeof RegrasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/conta': {
+      id: '/_authenticated/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof AuthenticatedContaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/entrar': {
+      id: '/_authenticated/entrar'
+      path: '/entrar'
+      fullPath: '/entrar'
+      preLoaderRoute: typeof AuthenticatedEntrarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/jogador': {
+      id: '/_authenticated/jogador'
+      path: '/jogador'
+      fullPath: '/jogador'
+      preLoaderRoute: typeof AuthenticatedJogadorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/rolador': {
+      id: '/_authenticated/rolador'
+      path: '/rolador'
+      fullPath: '/rolador'
+      preLoaderRoute: typeof AuthenticatedRoladorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mesa/': {
+      id: '/_authenticated/mesa/'
+      path: '/mesa'
+      fullPath: '/mesa/'
+      preLoaderRoute: typeof AuthenticatedMesaIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mesa/$id': {
+      id: '/_authenticated/mesa/$id'
+      path: '/mesa/$id'
+      fullPath: '/mesa/$id'
+      preLoaderRoute: typeof AuthenticatedMesaIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mestre/': {
+      id: '/_authenticated/mestre/'
+      path: '/mestre'
+      fullPath: '/mestre/'
+      preLoaderRoute: typeof AuthenticatedMestreIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mestre/$id': {
+      id: '/_authenticated/mestre/$id'
+      path: '/mestre/$id'
+      fullPath: '/mestre/$id'
+      preLoaderRoute: typeof AuthenticatedMestreIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedContaRoute: typeof AuthenticatedContaRoute
+  AuthenticatedEntrarRoute: typeof AuthenticatedEntrarRoute
+  AuthenticatedJogadorRoute: typeof AuthenticatedJogadorRoute
+  AuthenticatedRoladorRoute: typeof AuthenticatedRoladorRoute
+  AuthenticatedMesaIdRoute: typeof AuthenticatedMesaIdRoute
+  AuthenticatedMestreIdRoute: typeof AuthenticatedMestreIdRoute
+  AuthenticatedMesaIndexRoute: typeof AuthenticatedMesaIndexRoute
+  AuthenticatedMestreIndexRoute: typeof AuthenticatedMestreIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedContaRoute: AuthenticatedContaRoute,
+  AuthenticatedEntrarRoute: AuthenticatedEntrarRoute,
+  AuthenticatedJogadorRoute: AuthenticatedJogadorRoute,
+  AuthenticatedRoladorRoute: AuthenticatedRoladorRoute,
+  AuthenticatedMesaIdRoute: AuthenticatedMesaIdRoute,
+  AuthenticatedMestreIdRoute: AuthenticatedMestreIdRoute,
+  AuthenticatedMesaIndexRoute: AuthenticatedMesaIndexRoute,
+  AuthenticatedMestreIndexRoute: AuthenticatedMestreIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  CadastroRoute: CadastroRoute,
+  LoginRoute: LoginRoute,
+  RegrasRoute: RegrasRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
