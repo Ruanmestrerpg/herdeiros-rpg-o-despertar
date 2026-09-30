@@ -56,7 +56,7 @@ function CampaignPage() {
   async function addNpc(e: React.FormEvent) {
     e.preventDefault();
     const { error } = await supabase.from("npcs_enemies").insert({ ...f, campaign_id: id });
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     setF({ ...f, name: "" }); load();
   }
   async function delNpc(nid: string) {

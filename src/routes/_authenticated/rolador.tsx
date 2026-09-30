@@ -36,7 +36,7 @@ function Rolador() {
 
   async function roll(e: string) {
     const { data, error } = await supabase.rpc("record_roll", { p_expression: e });
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     setLast(data as Roll);
     load();
   }

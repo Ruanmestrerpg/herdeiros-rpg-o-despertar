@@ -36,8 +36,8 @@ function Mestre() {
 
   async function create(e: React.FormEvent) {
     e.preventDefault();
-    const { data, error } = await supabase.rpc("create_campaign", { p_name: name, p_password: pw || undefined });
-    if (error) return toast.error(errMsg(error));
+    const { data, error } = await supabase.rpc("create_campaign", { p_name: name, ...(pw ? { p_password: pw } : {}) });
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success(`Mesa criada! Código: ${(data as Tables<"campaigns">).code}`);
     setName(""); setPw(""); load();
   }

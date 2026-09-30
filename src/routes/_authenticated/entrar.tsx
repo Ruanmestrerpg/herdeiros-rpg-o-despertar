@@ -42,7 +42,7 @@ function Entrar() {
     setBusy(true);
     const { data, error } = await supabase.rpc("join_campaign", { p_code: code, p_password: pw, p_sheet_id: sheet || (null as unknown as string) });
     setBusy(false);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success("Você entrou na mesa!");
     nav({ to: "/mesa/$id", params: { id: data as string } });
   }

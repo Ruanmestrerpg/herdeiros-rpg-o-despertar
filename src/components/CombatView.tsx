@@ -125,7 +125,7 @@ export function CombatView({ campaignId, isMaster }: { campaignId: string; isMas
 }
 
 function EventRow({ e }: { e: Ev }) {
-  const d = e.data as Record<string, unknown>;
+  const d = e.data as { dice?: number[]; hit?: boolean; crit?: boolean; karmic?: boolean; attacker?: string; target?: string; weapon?: string; attribute?: string; attr_value?: number; highest?: number; defense?: string; defense_value?: number; raw_damage?: number; final_damage?: number; pv_before?: number; pv_after?: number };
   if (e.type !== "attack") {
     return <div className="rounded-md bg-muted/40 px-3 py-2 text-sm text-muted-foreground">{e.message}</div>;
   }
@@ -162,13 +162,13 @@ function AttackPanel({ combat, attacker, parts, onDone }: { combat: Combat; atta
   const attrVal = attacker[attr];
 
   async function resolve() {
-    if (!target) return toast.error("Escolha um alvo");
+    if (!target) { toast.error("Escolha um alvo"); return; }
     setBusy(true);
     const { data, error } = await supabase.rpc("perform_attack", {
       p_combat_id: combat.id, p_target_id: target, p_attribute: attr, p_defense: defense, p_base_damage: dmg, p_weapon: weapon, p_karmic: karmic,
     });
     setBusy(false);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     const r = data as { hit: boolean; final_damage: number; highest: number; crit: boolean };
     toast[r.hit ? "success" : "info"](r.hit ? `${r.crit ? "CRÍTICO! " : ""}${r.final_damage} de dano (maior d20: ${r.highest})` : `Errou! (maior d20: ${r.highest})`);
     onDone();

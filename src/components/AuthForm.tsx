@@ -44,7 +44,7 @@ export function AuthForm({ mode, redirect }: { mode: "login" | "cadastro"; redir
   async function google() {
     if (redirect) sessionStorage.setItem("post_login", dest);
     const res = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/login" });
-    if (res.error) return toast.error(errMsg(res.error));
+    if (res.error) { toast.error(errMsg(res.error)); return; }
     if (res.redirected) return;
     nav({ to: dest });
   }

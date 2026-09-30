@@ -63,7 +63,7 @@ function Jogador() {
     setBusy(true);
     const { error } = await supabase.from("sheets").insert({ ...form, user_id: user.id });
     setBusy(false);
-    if (error) return toast.error(errMsg(error));
+    if (error) { toast.error(errMsg(error)); return; }
     toast.success("Ficha criada!");
     setForm({ name: "", concept: "", weapon: "", corpo: 1, mente: 1, espirito: 1 });
     load();
