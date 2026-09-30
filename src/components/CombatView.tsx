@@ -190,7 +190,7 @@ function AttackPanel({ combat, attacker, parts, onDone }: { combat: Combat; atta
         <div className="mt-1 grid grid-cols-3 gap-1">
           {(["corpo", "mente", "espirito"] as const).map((a) => (
             <button key={a} onClick={() => setAttr(a)} className={cn("rounded-md border py-2 text-xs font-bold tracking-wider", attr === a ? "border-primary bg-primary text-primary-foreground" : "bg-muted")}>
-              {ATTR_LABEL[a].toUpperCase()}
+              {ATTR_LABEL[a]?.toUpperCase()}
             </button>
           ))}
         </div>

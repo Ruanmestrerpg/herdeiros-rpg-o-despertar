@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Panel } from "@/components/game";
 import { errMsg } from "@/lib/auth";
 
-export function AuthForm({ mode, redirect }: { mode: "login" | "cadastro"; redirect?: string }) {
+export function AuthForm({ mode, redirect }: { mode: "login" | "cadastro"; redirect?: string | undefined }) {
   const nav = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -65,9 +65,9 @@ export function AuthForm({ mode, redirect }: { mode: "login" | "cadastro"; redir
         <Button variant="outline" className="w-full" onClick={google}>Continuar com Google</Button>
         <p className="mt-6 text-center text-sm text-muted-foreground">
           {mode === "login" ? (
-            <>Não tem conta? <Link to="/cadastro" search={{ redirect }} className="text-lilac">Cadastre-se</Link></>
+            <>Não tem conta? <Link to="/cadastro" search={redirect ? { redirect } : {}} className="text-lilac">Cadastre-se</Link></>
           ) : (
-            <>Já tem conta? <Link to="/login" search={{ redirect }} className="text-lilac">Entrar</Link></>
+            <>Já tem conta? <Link to="/login" search={redirect ? { redirect } : {}} className="text-lilac">Entrar</Link></>
           )}
         </p>
       </Panel>
